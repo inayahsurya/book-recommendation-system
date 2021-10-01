@@ -1,4 +1,4 @@
-# Laporan Proyek Machine Learning - Inayah Surya Islami
+# Book Recommendation System
 
 ## Domain Proyek
 Data dari [Picodi.com](https://www.picodi.com/id/mencari-penawaran/pembelian-buku-di-indonesia-dan-di-seluruh-dunia) mengatakan, jumlah permintaan buku di pasar Indonesia masih cukup tinggi. Di bulan Desember 2018 jumlahnya bisa mencapai 12 persen dari transaksi tahunan, atau meningkat hampir dua kali lipat dari penjualan di awal tahun.
@@ -22,17 +22,17 @@ Ada 3 solusi yang diberikan bergantung dengan hasil rekomendasi yang ingin dicap
 ## Data Understanding
 Dataset diambil dari [Kaggle Book Recommendation Dataset](https://www.kaggle.com/arashnic/book-recommendation-dataset). Dataset berisi 3 file csv, yaitu:
 - **Users**. Berisi informasi user
- -- UserID: identitas unik user berupa integer agar user anonymous
- -- Location: lokasi tempat tinggal user
- -- Age: umur user
+  - UserID: identitas unik user berupa integer agar user anonymous
+  - Location: lokasi tempat tinggal user
+  - Age: umur user
 - **Books**. Berisi informasi buku
- -- Book-Title: judul
- -- Book-Author: penulis
- -- Year-Of-Publication: Tahun terbit
- -- Publisher: Penerbit
- -- Image-URL-S, Image-URL-M, Image-URL-L: link sampul buku
+  - Book-Title: judul
+  - Book-Author: penulis
+  - Year-Of-Publication: Tahun terbit
+  - Publisher: Penerbit
+  - Image-URL-S, Image-URL-M, Image-URL-L: link sampul buku
 - **Ratings**. Berisi informasi rating buku dari user
- -- Book-Rating: rating buku
+  - Book-Rating: rating buku
 
 ## Data Preparation
 Data preparation adalah tahap di mana kita melakukan proses transformasi pada data sehingga menjadi bentuk yang cocok untuk proses pemodelan. Ada beberapa tahapan yang dilakukan pada data preparation, antara lain :
@@ -44,11 +44,11 @@ Data preparation adalah tahap di mana kita melakukan proses transformasi pada da
 ## Modelling
 - **Popular Recommendation**.
 Mencari informasi rata-rata rating dan jumlah rating yang diterima per buku. Untuk menggabungkan kedua informasi tersebut, dibuatlah weighted rating, kemudian memilih 20 produk terbaik berdasarkan weighted rating. Weighted Rating = (Rv + Cm) / (v + m), dimana v adalah jumlah rating diterima per buku, R adalah rata-rata rating per buku, C adalah rata-rata rating seluruh buku, dan m adalah minimal jumlah rating yang diterima.
-![Weighted Rating](https://miro.medium.com/max/368/1*fGziZl2Do-VyQXSCPq_Y2Q.png)
+  ![Weighted Rating](https://miro.medium.com/max/368/1*fGziZl2Do-VyQXSCPq_Y2Q.png)
 
 - **Content-Based Recommendation**
 Menghitung derajat kesamaan (similariy degree) antar buku berdasarkan author dengan teknik cosine similarity dari library scikit learn. Cosine similarity menghitung kesamaan sebagai dot product yang dinormalisasi dari X dan Y: 
-![Cosine Similarity](https://wikimedia.org/api/rest_v1/media/math/render/svg/1d94e5903f7936d3c131e040ef2c51b473dd071d)
+  ![Cosine Similarity](https://wikimedia.org/api/rest_v1/media/math/render/svg/1d94e5903f7936d3c131e040ef2c51b473dd071d)
 
 - **Model-Based Collaborative Filtering Recomendation**
 Mentraining data user buku dengan model SVD dari library Surprise kemudian mengurutkan 10 buku dengan prediksi rating tertinggi. 
@@ -56,9 +56,9 @@ Mentraining data user buku dengan model SVD dari library Surprise kemudian mengu
 ## Evaluation
 Hasil evaluasi dari model SVD menggunakan metode k-fold cross validation. Metode ini adalah salah satu dari jenis pengujian cross validation yang berfungsi untuk menilai kinerja proses sebuah metode algoritme dengan membagi sampel data secara acak dan mengelompokkan data tersebut sebanyak nilai K fold. Dimana data training adalah K-1 fold dan sisanya digunakan sebagai data testing. Kemudian hasil testing dihitung dengan matriks:
 - **Mean Absolute Error (MAE)**, merepresentasikan rata-rata perbedaan mutlak antara nilai aktual dan prediksi pada dataset. MAE mengukur rata-rata residu dalam dataset. MAE lebih intuitif dalam memberikan rata-rata error dari keseluruhan data.
-![MAE](https://1.bp.blogspot.com/-OY4iwFkwEdQ/X8J8nmJFPFI/AAAAAAAACYo/hFjo4vbDdWguXH5XKhHEXWihbKKIkZA_wCLcBGAsYHQ/s241/Rumus%2BMAE.jpg)
+  ![MAE](https://1.bp.blogspot.com/-OY4iwFkwEdQ/X8J8nmJFPFI/AAAAAAAACYo/hFjo4vbDdWguXH5XKhHEXWihbKKIkZA_wCLcBGAsYHQ/s241/Rumus%2BMAE.jpg)
 - **Root Mean Squared Error (RMSE)**, dihitung dengan mengkuadratkan error (prediksi – observasi) dibagi dengan jumlah data (= rata-rata), lalu diakarkan.
-![RMSE](https://1.bp.blogspot.com/-1Dkr12kqVyc/Xa60hhWWcTI/AAAAAAAABIE/-xUrC9kWrWM-VMUq2PIWQ5_v51xNWBnWwCLcBGAsYHQ/s1600/Picture4.jpg)
+  ![RMSE](https://1.bp.blogspot.com/-1Dkr12kqVyc/Xa60hhWWcTI/AAAAAAAABIE/-xUrC9kWrWM-VMUq2PIWQ5_v51xNWBnWwCLcBGAsYHQ/s1600/Picture4.jpg)
 
 
 
